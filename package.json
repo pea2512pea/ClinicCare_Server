@@ -23,6 +23,7 @@
   "homepage": "https://github.com/pea2512pea/ClinicCare_Server#readme",
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "sequelize": "^6.37.7",
