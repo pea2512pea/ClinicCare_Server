@@ -183,7 +183,10 @@ const deleteDoctor = async (req, res) => {
           paranoid: false,
         });
         for (const appointment of thisAppointment) {
-          appointment.status = "Cancelled";
+          if (appointment.status === "completed") {
+            continue;
+          }
+          appointment.status = "cancelled";
           await appointment.save();
         }
       }

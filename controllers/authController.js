@@ -22,7 +22,7 @@ const checkAuth = (req, res) => {
           .catch(() =>
             res.status(500).json({ error: "Failed to retrieve patient" }),
           );
-      } else if (user.role === "doctor") {
+      } else if (user.role === "doctor" || user.role === "admin") {
         DoctorModel.findByPk(user.id, {
           attributes: [
             "first_name",
@@ -34,7 +34,7 @@ const checkAuth = (req, res) => {
         })
           .then((doctor) => {
             if (doctor) {
-              res.status(200).json({ user: doctor, role: "doctor" });
+              res.status(200).json({ user: doctor, role: user.role });
             } else {
               res.status(404).json({ error: "Doctor not found" });
             }

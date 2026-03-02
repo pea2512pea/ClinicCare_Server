@@ -134,7 +134,10 @@ const deletePatient = async (req, res) => {
         paranoid: false,
       });
       for (const appointment of appointments) {
-        appointment.status = "Cancelled";
+        if (appointment.status === "completed") {
+          continue;
+        }
+        appointment.status = "cancelled";
         await appointment.save();
       }
       res.status(200).json({

@@ -113,8 +113,8 @@ const deleteService = async (req, res) => {
         const appointment = await AppointmentModel.findByPk(
           appointmentService.appointment_id,
         );
-        if (appointment) {
-          appointment.status = "Cancelled";
+        if (appointment && appointment.status !== "completed") {
+          appointment.status = "cancelled";
           await appointment.save();
         }
       }

@@ -164,7 +164,6 @@ const getIncomeOfService = async (req, res) => {
         {
           model: ServiceModel,
           as: "Services",
-          // Filter services at the query level if service_ids provided
           where: parsedServiceIds
             ? { id: { [Op.in]: parsedServiceIds } }
             : undefined,
