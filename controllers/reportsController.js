@@ -151,6 +151,7 @@ const getIncomeOfService = async (req, res) => {
         [Op.between]: [new Date(startDate), new Date(endDate)],
       };
     }
+    where.status = "completed";
 
     const parsedServiceIds = service_ids
       ? service_ids.split(",").map((id) => parseInt(id))

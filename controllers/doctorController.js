@@ -58,6 +58,7 @@ const getDoctors = async (req, res) => {
             { last_name: { [Op.like]: `%${searchQuery}%` } },
             { citizen_id: { [Op.like]: `%${searchQuery}%` } },
             { specialty: { [Op.like]: `%${searchQuery}%` } },
+            { role: { [Op.like]: `%${searchQuery}%` } },
           ],
         }
       : {};
@@ -127,10 +128,13 @@ const updateDoctor = async (req, res) => {
         .status(403)
         .json({ error: "Admin cannot change their own role to non-admin" });
     }
-    if (req.user.role == "admin" && userId !== id && role === "admin") {
-      return res
-        .status(403)
-        .json({ error: "Admin cannot change other admin's role to admin" });
+    if (req.user.role == "admin" && userId !== id && role === "doctor") {
+      const doctor = await DoctorModel.findByPk(id);
+      if (doctor.role === "admin") {
+        return res.status(403).json({
+          error: "Admin cannot change other admin's role to doctor",
+        });
+      }
     }
 
     const doctor = await DoctorModel.findByPk(id);
